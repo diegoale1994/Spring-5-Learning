@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import net.itinajero.app.model.Pelicula;
@@ -52,5 +54,15 @@ public class PeliculasServiceJPA implements IPeliculasService{
 		generos.add("Ciencia Ficcion");
 		return generos;
 	}
+
+	@Override
+	public void eliminar(int idPelicula) {
+		peliculasRepo.deleteById(idPelicula);
+		
+	}
+	@Override
+	public Page<Pelicula>buscarTodas(Pageable page) {
+		return peliculasRepo.findAll(page);
+		}
 
 }

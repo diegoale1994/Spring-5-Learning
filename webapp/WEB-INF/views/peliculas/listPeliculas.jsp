@@ -5,7 +5,10 @@
 <html lang="en">
 <head>
 <spring:url value="/resources" var="urlPublic" />
+<spring:url value="/peliculas/delete" var="urlDelete" />
 <spring:url value="/peliculas/create" var="urlCrearPelicula" />
+<spring:url value="/peliculas" var="urlPeliculas" />
+
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -47,7 +50,7 @@
 					<th>Estatus</th>
 					<th>Opciones</th>
 				</tr>
-				<c:forEach items="${peliculas}" var="pelicula">
+				<c:forEach items="${peliculas.content}" var="pelicula">
 					<tr>
 						<td>${pelicula.titulo}</td>
 						<td>${pelicula.genero}</td>
@@ -68,14 +71,19 @@
 						<spring:url value="/peliculas/edit/${pelicula.id}" var="urlEditPelicula" />
 						<td><a href="${urlEditPelicula }" class="btn btn-success btn-sm" role="button"
 							title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
-							<a href="#" class="btn btn-danger btn-sm" role="button"
+							<a href="${urlDelete}/${pelicula.id}" onclick ='return confirm("Esta seguro?")'class="btn btn-danger btn-sm" role="button"
 							title="Eliminar"><span class="glyphicon glyphicon-trash"></span></a>
 						</td>
 					</tr>
 				</c:forEach>
 			</table>
 		</div>
-
+<nav aria-label="">
+	<ul class="pager">
+		<li><a href="${urlPeliculas}/indexPaginate?page=${peliculas.number -1 }">Anterior</a></li>
+		<li><a href="${urlPeliculas}/indexPaginate?page=${peliculas.number + 1 }">Siguiente</a></li>
+	</ul>
+</nav>
 		<hr class="featurette-divider">
 
 		<!-- FOOTER -->

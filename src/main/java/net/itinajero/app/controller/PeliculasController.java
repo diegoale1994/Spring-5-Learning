@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -46,9 +48,17 @@ public class PeliculasController {
 		return "peliculas/listPeliculas";
 	}
 	
+	
+	@GetMapping(value = "/indexPaginate")
+	public String mostrarIndexPaginado(Model model, Pageable page) {
+    Page<Pelicula> lista = servicePeliculas.buscarTodas(page);
+	model.addAttribute("peliculas", lista);
+	return "peliculas/listPeliculas";
+	}
+	
+	
 	@GetMapping("/create")
 	public String crear(@ModelAttribute Pelicula pelicula, Model model) {
-		model.addAttribute("generos", servicePeliculas.buscarGeneros());
 		return "peliculas/formPelicula";
 	}
 
@@ -78,16 +88,28 @@ public class PeliculasController {
 		//return "peliculas/formPelicula";
 			atributes.addFlashAttribute("mensaje","El registro fue Exitoso!");
 			//modelo.addAttribute("mensaje","El registro fue Exitoso!");
-			return "redirect:/peliculas/index";
+			return "redirect:/peliculas/indexPaginate";
 	}
 	@GetMapping("/edit/{idPelicula}")
 	public String editar(Model modelo,@PathVariable int idPelicula) {
 		Pelicula pelicula = servicePeliculas.buscarPorId(idPelicula);
 		modelo.addAttribute("pelicula", pelicula);
-		modelo.addAttribute("generos", servicePeliculas.buscarGeneros());
 		return "peliculas/formPelicula";
 	}
-
+	
+	@GetMapping("/delete/{id}")
+	public String eliminar(Model modelo,@PathVariable("id") int idPelicula, RedirectAttributes atributes) {
+		Pelicula pelicula = servicePeliculas.buscarPorId(idPelicula);
+		
+		servicePeliculas.eliminar(idPelicula);
+		serviceDetalles.eliminar(pelicula.getDetalle().getId());
+		atributes.addFlashAttribute("mensaje","Eliminada de forma correcta");
+		return "redirect:/peliculas/index";
+	}
+	@ModelAttribute("generos")
+	public List<String> getGeneros(){
+		return servicePeliculas.buscarGeneros();
+	}
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");

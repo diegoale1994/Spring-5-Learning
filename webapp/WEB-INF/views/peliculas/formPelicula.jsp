@@ -123,6 +123,7 @@
         <div class="row">
           <div class="col-sm-3">
             <div class="form-group">
+            <form:hidden path ="detalle.id" />
               <label for="director">Director</label>
               <form:input type="text" class="form-control" path="detalle.director" id="director" required="required" />
             </div>  

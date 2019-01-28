@@ -26,6 +26,21 @@
 
       <h3 class="blog-title"><span class="label label-success">Datos de la Noticia</span></h3>
 
+		
+		<spring:hasBindErrors name="noticia">
+	
+	<div class='alert alert-danger' role = 'alert'>
+		Por favor corrija los siguientes errores
+		<ul>
+			<c:forEach var = "error" items="${errors.allErrors}">
+				<li><spring:message message="${error }" /></li>
+			</c:forEach>
+		</ul>
+	</div>
+	
+	</spring:hasBindErrors>
+
+
 	<spring:url value="/noticias/save" var="urlForm"></spring:url>
 
       <form:form action = "${urlForm}" method = "POST" modelAttribute="noticia">

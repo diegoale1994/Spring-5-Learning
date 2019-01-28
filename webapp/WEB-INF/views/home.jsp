@@ -1,5 +1,6 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -139,7 +140,7 @@
 						<h3 class="blog-post-title">${noticia.titulo}</h3>
 
 						<p class="blog-post-meta">
-							<span class="label label-danger">Publicado: ${noticia.fecha}</span>
+							<span class="label label-danger">Publicado: <span><fmt:formatDate pattern="dd-MM-yyyy" value="${noticia.fecha}" /></span>
 						</p>
 						<p>
 							${noticia.detalle }

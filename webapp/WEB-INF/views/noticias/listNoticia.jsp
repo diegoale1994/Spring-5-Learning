@@ -12,6 +12,7 @@
     <title>Listado de Noticias</title>
     <spring:url value="/resources" var="urlPublic" />
     <spring:url value="/noticias/create" var="urlCreate" />
+     <spring:url value="/noticias" var="urlNoticias" />
     <link href="${urlPublic}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="${urlPublic}/bootstrap/css/theme.css" rel="stylesheet">
     
@@ -25,7 +26,9 @@
     <div class="container theme-showcase" role="main">
 
       <h3>Listado de Noticias</h3>
-      
+      <c:if test="${mensaje !=null}">
+			<div class='alert alert-success' role='alert'>${mensaje}</div>
+		</c:if>
       <a href="${urlCreate }" class="btn btn-success" role="button" title="Nueva Pelicula" >Nueva</a><br><br>
 
       <div class="table-responsive">
@@ -37,7 +40,7 @@
                 <th>Estatus</th>              
                 <th>Opciones</th>              
             </tr>
-            <c:forEach items="${noticias}" var="noticia">
+            <c:forEach items="${noticias.content}" var="noticia">
             
             <tr>
                 <td>${noticia.id}</td>
@@ -56,8 +59,9 @@
           
                 <td>
                 <spring:url value="/noticias/edit/${noticia.id}" var="urlEditNoticia" />
+                 <spring:url value="/noticias/delete/${noticia.id}" var="urlDeleteNoticia" />
                     <a href="${urlEditNoticia }" class="btn btn-success btn-sm" role="button" title="Edit" ><span class="glyphicon glyphicon-pencil"></span></a>
-                    <a href="#" class="btn btn-danger btn-sm" role="button" title="Eliminar" ><span class="glyphicon glyphicon-trash"></span></a>
+                    <a href="${urlDeleteNoticia }" class="btn btn-danger btn-sm" role="button" onclick ='return confirm("Esta seguro?")' title="Eliminar" ><span class="glyphicon glyphicon-trash"></span></a>
                 </td>
             </tr>
             
@@ -65,6 +69,10 @@
             
         </table>
       </div>  
+      <ul class="pager">
+		<li><a href="${urlNoticias}/index?page=${noticias.number -1 }">Anterior</a></li>
+		<li><a href="${urlNoticias}/index?page=${noticias.number + 1 }">Siguiente</a></li>
+	</ul>
       <hr class="featurette-divider">
 
       <!-- FOOTER -->

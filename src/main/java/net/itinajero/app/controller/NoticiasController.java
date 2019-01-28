@@ -5,8 +5,12 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -30,8 +34,9 @@ public class NoticiasController {
 	private INoticiasService serviceNoticias;
 	
 	@GetMapping(value="/index")
-	public String mostrarIndex(Model modelo) {
-		modelo.addAttribute("noticias", serviceNoticias.buscartodas());
+	public String mostrarIndex(Model modelo,Pageable page) {
+		Page<Noticia> lista = serviceNoticias.buscartodas(page);
+		modelo.addAttribute("noticias", lista );
 		return "noticias/listNoticia";
 	}
 	
@@ -49,9 +54,28 @@ public class NoticiasController {
 	}
 	
 	@PostMapping(value="/save") //data binding
-	public String guardar(Noticia noticia) {
+	public String guardar(Noticia noticia,BindingResult result, RedirectAttributes atributes) {
+		
+		if(result.hasErrors()) {
+			for (ObjectError error: result.getAllErrors()) {
+				System.out.println(error.getDefaultMessage());
+			}
+			return "noticias/formNoticias";
+		}
+		
+		
 		serviceNoticias.guardar(noticia);
-		return "noticias/formNoticia";
+		
+		atributes.addFlashAttribute("mensaje","El registro fue Exitoso!");
+		//modelo.addAttribute("mensaje","El registro fue Exitoso!");
+		return "redirect:/noticias/index";
+	}
+	
+	@GetMapping("/delete/{id}")
+	public String eliminar(Model modelo,@PathVariable("id") int idNoticia, RedirectAttributes atributes) {
+		serviceNoticias.eliminar(idNoticia);
+		atributes.addFlashAttribute("mensaje","Eliminada de forma correcta");
+		return "redirect:/noticias/index";
 	}
 	
 	@InitBinder

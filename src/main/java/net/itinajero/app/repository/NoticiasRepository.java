@@ -12,6 +12,7 @@ import net.itinajero.app.model.Noticia;
 //public interface NoticiasRepository extends CrudRepository<Noticia, Integer> {
 	public interface NoticiasRepository extends JpaRepository<Noticia, Integer> {
 
+	
 		List<Noticia> findByEstatus(String estatus);
 		
 		List<Noticia> findByFecha(Date date);
@@ -21,4 +22,9 @@ import net.itinajero.app.model.Noticia;
 		List<Noticia> findByEstatusOrFecha(String estatus,Date date);
 		
 		List<Noticia> findByFechaBetween(Date date,Date date1);
+		
+		List<Noticia> findTop3ByEstatusOrderByFechaDesc(String estatus);
+		
+		List<Noticia> findAllByOrderByFechaDesc();
+		
 }

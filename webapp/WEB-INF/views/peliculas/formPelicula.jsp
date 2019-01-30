@@ -108,7 +108,7 @@
           <div class="col-sm-3">
             <div class="form-group">
               <label for="imagen">Imagen</label>
-              <form:hidden path="imagen"/>
+              <form:hidden path="archivo"/>
               <input type="file" id="archivoImagen" name="archivoImagen" />
               <p class="help-block">Imagen de la pelicula</p>
             </div> 

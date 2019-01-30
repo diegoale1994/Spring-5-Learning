@@ -4,10 +4,12 @@ import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import net.itinajero.app.model.Banner;
-@Service
+//@Service
 public class BannersServiceImpl implements IBannersService {
 	SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 	private List<Banner> lista = null;
@@ -70,15 +72,28 @@ public class BannersServiceImpl implements IBannersService {
 
 	}
 
-	/**
-	 * Regresamos la lista de objetos Banner
-	 */
 	@Override
 	public List<Banner> buscarTodos() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-		// Ejercicio: Implementar metodo
-		return lista;
+	@Override
+	public Page<Banner> buscarTodosPaginados(Pageable page) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	@Override
+	public Banner buscarPorId(int idBanner) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void delete(int idBanner) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

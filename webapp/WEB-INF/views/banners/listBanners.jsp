@@ -11,6 +11,7 @@
     <meta name="author" content="">
     <title>Listado de imagenes del banner</title>
     <spring:url value="/resources" var="urlPublic" />
+    <spring:url value="/banners" var="urlBanners" />
     <spring:url value="/banners/create" var="urlBannersCreate"></spring:url>
 <spring:url value="/" var="urlRoot" />
     <link href="${urlPublic}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -41,7 +42,7 @@
                 <th>Estatus</th>
                 <th>Opciones</th>              
             </tr>
-            <c:forEach items="${banners}" var="banner">
+            <c:forEach items="${banners.content}" var="banner">
             <tr>
                 <td>${banner.id}</td>
                 <td>${banner.titulo}</td>
@@ -49,7 +50,7 @@
 								value="${banner.fecha}" /></td>    
                 <td>${banner.archivo}</td>   
                 <c:choose>
-                <c:when test="${banner.estatus eq 'Activa'}">
+                <c:when test="${banner.estatus eq 'Activo'}">
                 <td><span class="label label-success">${banner.estatus}</span></td>
                 </c:when>
                 <c:otherwise>
@@ -58,13 +59,19 @@
                 </c:choose>                      
                 
                 <td>
-                    <a href="#" class="btn btn-success btn-sm" role="button" title="Edit" ><span class="glyphicon glyphicon-pencil"></span></a>
-                    <a href="#" class="btn btn-danger btn-sm" role="button" title="Eliminar" ><span class="glyphicon glyphicon-trash"></span></a>
+                <spring:url value="/banners/edit/${banner.id}" var="urlEditBanner" />
+                 <spring:url value="/banners/delete/${banner.id}" var="urlDeleteBanner" />
+                    <a href="${urlEditBanner }" class="btn btn-success btn-sm" role="button" title="Edit" ><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a href="${urlDeleteBanner }" class="btn btn-danger btn-sm" role="button" onclick ='return confirm("Esta seguro?")' title="Eliminar" ><span class="glyphicon glyphicon-trash"></span></a>
                 </td>
             </tr>
             </c:forEach>    
         </table>
       </div>  
+       <ul class="pager">
+		<li><a href="${urlBanners}/index?page=${banners.number -1 }">Anterior</a></li>
+		<li><a href="${urlBanners}/index?page=${banners.number + 1 }">Siguiente</a></li>
+	</ul>
       <hr class="featurette-divider">
 
       <!-- FOOTER -->

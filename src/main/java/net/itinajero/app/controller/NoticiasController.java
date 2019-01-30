@@ -48,7 +48,6 @@ public class NoticiasController {
 	@GetMapping("/edit/{idNoticia}")
 	public String editar(Model modelo,@PathVariable int idNoticia) {
 		Noticia noticia = serviceNoticias.buscarPorId(idNoticia);
-		System.out.println(serviceNoticias.buscarPorId(idNoticia));
 		modelo.addAttribute("noticia", noticia);
 		return "noticias/formNoticia";
 	}

@@ -1,5 +1,6 @@
 <%@taglib uri ="http://www.springframework.org/tags" prefix = "spring" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri = "http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -37,12 +38,13 @@
 	</div>
 	
 	</spring:hasBindErrors>
-         <form action = "${urlForm}" method = "POST" enctype= "multipart/form-data">
+         <form:form action = "${urlForm}" method = "POST" enctype= "multipart/form-data" modelAttribute="banner">
             <div class="row">         
                <div class="col-sm-6">
                   <div class="form-group">
-                     <label for="titulo">Titulo</label>             
-                     <input type="text" class="form-control" name="titulo" id="titulo" required="required"/>
+                     <label for="titulo">Titulo</label>      
+                     <form:hidden path ="id" />        
+                     <form:input type="text" class="form-control" path="titulo" id="titulo" required="required"/>
                   </div>
                </div>
 
@@ -50,7 +52,8 @@
                <div class="col-sm-3">
                   <div class="form-group">
                      <label for="imagen">Imagen</label>
-                     <input type="file" id="archivoImagen" name="archivoImagen" required="required" />
+                     <form:hidden path="archivo"/>
+                     <input type="file" id="archivoImagen" name="archivoImagen"/>
                      <p class="help-block">Tamaño recomendado: 1140 x 250 </p>
                   </div> 
                </div> 
@@ -58,16 +61,16 @@
                <div class="col-sm-3">
                   <div class="form-group">
                      <label for="estatus">Estatus</label>             
-                     <select id="estatus" name="estatus" class="form-control">
-                        <option value="Activa">Activa</option>
-                        <option value="Inactivo">Inactivo</option>                
-                     </select>  
+                     <form:select id="estatus" path="estatus" class="form-control">
+                        <form:option value="Activo">Activo</form:option>
+                        <form:option value="Inactivo">Inactivo</form:option>                
+                     </form:select>  
                   </div>
                </div>
             </div>
 
             <button type="submit" class="btn btn-danger" >Guardar</button>
-         </form> 
+         </form:form> 
 
          <hr class="featurette-divider">
 

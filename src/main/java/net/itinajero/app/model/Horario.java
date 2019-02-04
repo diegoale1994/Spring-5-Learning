@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 @Entity
-@Table(name="Horarios")
+@Table(name="horarios")
 public class Horario {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -74,12 +74,6 @@ public class Horario {
 
 	public void setPelicula(Pelicula pelicula) {
 		this.pelicula = pelicula;
-	}
-
-	@Override
-	public String toString() {
-		return "Horario [id=" + id + ", fecha=" + fecha + ", hora=" + hora + ", sala=" + sala + ", precio=" + precio
-				+ ", pelicula=" + pelicula + "]";
 	}
 	
 }

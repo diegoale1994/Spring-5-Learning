@@ -36,7 +36,7 @@ public class Pelicula {
 	@OneToMany(mappedBy="pelicula",fetch=FetchType.EAGER)
 	private List<Horario> horarios;
 	public Pelicula() {
-		System.out.println("Constructor invocado");
+
 	}
 	
 	public Detalle getDetalle() {

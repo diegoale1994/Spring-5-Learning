@@ -1,5 +1,6 @@
 package net.itinajero.app.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -14,4 +15,5 @@ Pelicula buscarPorId(int idPelicula);
 List<String> buscarGeneros();
 void eliminar(int idPelicula);
 Page<Pelicula>buscarTodas(Pageable page);
+List<Pelicula> buscarPorFecha(Date fecha);
 }

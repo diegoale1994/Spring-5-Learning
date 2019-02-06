@@ -48,16 +48,15 @@ public class HomeController {
 	
 	
 	@RequestMapping(value="/search",method=RequestMethod.POST)
-	public String buscar(@RequestParam("fecha") String fecha, Model model) {
+	public String buscar(@RequestParam("fecha") Date fecha, Model model) {
 		
 	List<String> listaFechas = Utileria.getNextDays(4);
 		
-		List<Pelicula> peliculas = servicePeliculas.buscarTodas();
-		
+	List<Pelicula> peliculas = servicePeliculas.buscarPorFecha(fecha);
+	model.addAttribute("noticias",serviceNoticias.buscarindex());
 		model.addAttribute("fecha",listaFechas);
-		model.addAttribute("fechaBusqueda", fecha);
+		model.addAttribute("fechaBusqueda", dateFormat.format(fecha));
 		model.addAttribute("peliculas", peliculas);
-		System.out.println(fecha);
 		model.addAttribute("banners", serviceBanners.buscarTodos());
 		return "home";
 		
@@ -65,13 +64,21 @@ public class HomeController {
 	
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String mostrarPrincipal(Model model){
-		List<String> listaFechas = Utileria.getNextDays(4);
-		List<Pelicula> peliculas = servicePeliculas.buscarTodas();
-		model.addAttribute("noticias",serviceNoticias.buscarindex());
-		model.addAttribute("fecha",listaFechas);
-		model.addAttribute("fechaBusqueda",dateFormat.format(new Date()));
-		model.addAttribute("peliculas", peliculas);
-		model.addAttribute("banners", serviceBanners.buscarTodos());
+		Date fechaSinHora;
+		try {
+			fechaSinHora = dateFormat.parse(dateFormat.format(new Date()));
+			List<String> listaFechas = Utileria.getNextDays(4);
+			List<Pelicula> peliculas = servicePeliculas.buscarPorFecha(fechaSinHora);
+			model.addAttribute("noticias",serviceNoticias.buscarindex());
+			model.addAttribute("fecha",listaFechas);
+			model.addAttribute("fechaBusqueda",dateFormat.format(new Date()));
+			model.addAttribute("peliculas", peliculas);
+			model.addAttribute("banners", serviceBanners.buscarTodos());
+			
+		} catch (java.text.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "home";
 	}
 	

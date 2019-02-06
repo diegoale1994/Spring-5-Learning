@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 import net.itinajero.app.model.Pelicula;
 @Repository
 public interface PeliculasRepository extends JpaRepository<Pelicula, Integer> {
-
 }

@@ -10,27 +10,36 @@
 
 	<http auto-config="true">
 		<!--Declaramos todos los recursos que estaran protegidos -->
-		<intercept-url pattern="/peliculas/*" access="hasAnyAuthority('EDITOR','GERENTE')" />
-		<intercept-url pattern="/horarios/*" access="hasAnyAuthority('EDITOR','GERENTE')" />
-		<intercept-url pattern="/noticias/*" access="hasAnyAuthority('EDITOR','GERENTE')" />
-		<intercept-url pattern="/banners/*" access="hasAnyAuthority('GERENTE')" />
-		
+		<intercept-url pattern="/peliculas/*"
+			access="hasAnyAuthority('EDITOR','GERENTE')" />
+		<intercept-url pattern="/horarios/*"
+			access="hasAnyAuthority('EDITOR','GERENTE')" />
+		<intercept-url pattern="/noticias/*"
+			access="hasAnyAuthority('EDITOR','GERENTE')" />
+		<intercept-url pattern="/banners/*"
+			access="hasAnyAuthority('GERENTE')" />
+
 		<!--Custom login form -->
-		<form-login login-page="/formLogin" />
-		
+		<form-login login-page="/formLogin"
+			default-target-url="/admin/index" />
 	</http>
+	<!-- <authentication-manager> <authentication-provider> <user-service> <user 
+		name="diego" password="{noop}diego123" authorities="EDITOR" /> <user name="dementor" 
+		password="{noop}dementor123" authorities="GERENTE" /> </user-service> </authentication-provider> 
+		</authentication-manager> -->
 
+	<!--Autenticacion desde una base de datos -->
+	<!--  
 	<authentication-manager>
-
 		<authentication-provider>
-			<user-service>
-				<user name="diego" password="{noop}diego123"
-					authorities="EDITOR" />
-				<user name="dementor" password="{noop}dementor123"
-					authorities="GERENTE" />
-			</user-service>
+			<jdbc-user-service data-source-ref="dataSource" />
 		</authentication-provider>
-
 	</authentication-manager>
-
+-->
+<!--Autenticacion desde una base de datos personalizada -->
+<authentication-manager >
+<authentication-provider>
+<jdbc-user-service data-source-ref="dataSource" users-by-username-query="select username,password,activo from usuarios where username = ?"
+authorities-by-username-query="select username,perfil from usuarioperfil where username = ?" />
+</authentication-provider></authentication-manager>
 </b:beans>

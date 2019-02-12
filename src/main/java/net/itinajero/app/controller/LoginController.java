@@ -18,4 +18,9 @@ public class LoginController {
 		return "redirect:/formLogin";
 
 	}
+	
+	@GetMapping(value="/index")
+	public String mostrarPrincipalAdmin() {
+		return "menuAdmin";
+		}
 }

@@ -16,7 +16,7 @@ public class Usuario {
 	private String email;
 	private String username;
 	private String password;
-	private int activo;
+	private int activo=1;
 
 	public int getId() {
 		return id;

@@ -62,6 +62,7 @@
 					<li><a href="${urlRoot}peliculas/indexPaginate?page=0">Peliculas</a></li>
 					<li><a href="${urlRoot}banners/index">Banners</a></li>
 					<li><a href="${urlRoot}noticias/index">Noticias</a></li>
+					<li><a href="${urlRoot}usuarios/index">Usuarios</a></li>
 					<li><a href="#">Acerca</a></li>
 					<li><a href="${urlRoot}admin/logout">Salir</a></li>
 				</ul>

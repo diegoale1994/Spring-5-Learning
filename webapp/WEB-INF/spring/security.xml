@@ -18,6 +18,9 @@
 			access="hasAnyAuthority('EDITOR','GERENTE')" />
 		<intercept-url pattern="/banners/*"
 			access="hasAnyAuthority('GERENTE')" />
+			
+			<intercept-url pattern="/usuarios/*"
+			access="hasAnyAuthority('GERENTE')" />
 
 		<!--Custom login form -->
 		<form-login login-page="/formLogin"
